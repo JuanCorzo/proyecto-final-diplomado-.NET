@@ -16,34 +16,43 @@ public interface IGroqService
     Task<GroqAnalysisResult> AnalizarAsync(
         string titulo,
         string descripcion,
-        string direccion,
-        CancellationToken cancellationToken = default);
+        string direccion);
 }
 
-public sealed class GroqService(
-    HttpClient httpClient,
-    IConfiguration configuration,
-    ILogger<GroqService> logger) : IGroqService
+public sealed class GroqService : IGroqService
 {
+    private readonly HttpClient _httpClient;
+    private readonly IConfiguration _configuration;
+    private readonly ILogger<GroqService> _logger;
+
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         PropertyNameCaseInsensitive = true
     };
 
+    public GroqService(
+        HttpClient httpClient,
+        IConfiguration configuration,
+        ILogger<GroqService> logger)
+    {
+        _httpClient = httpClient;
+        _configuration = configuration;
+        _logger = logger;
+    }
+
     public async Task<GroqAnalysisResult> AnalizarAsync(
         string titulo,
         string descripcion,
-        string direccion,
-        CancellationToken cancellationToken = default)
+        string direccion)
     {
-        var apiKey = configuration["Groq:ApiKey"];
+        var apiKey = _configuration["Groq:ApiKey"];
         if (string.IsNullOrWhiteSpace(apiKey))
         {
             throw new GroqServiceException(
-                "La clave de Groq no está configurada. Use Groq:ApiKey en User Secrets o variables de entorno.");
+                "La clave de Groq no está configurada en el archivo .env.");
         }
 
-        var model = configuration["Groq:Model"] ?? "llama-3.3-70b-versatile";
+        var model = _configuration["Groq:Model"] ?? "llama-3.3-70b-versatile";
         var requestBody = new
         {
             model,
@@ -81,12 +90,12 @@ public sealed class GroqService(
 
         try
         {
-            using var response = await httpClient.SendAsync(request, cancellationToken);
-            var responseJson = await response.Content.ReadAsStringAsync(cancellationToken);
+            using var response = await _httpClient.SendAsync(request);
+            var responseJson = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
             {
-                logger.LogWarning(
+                _logger.LogWarning(
                     "Groq respondió con código {StatusCode}: {Response}",
                     response.StatusCode,
                     responseJson);
@@ -136,7 +145,7 @@ public sealed class GroqService(
                                    or TaskCanceledException
                                    or JsonException)
         {
-            logger.LogWarning(ex, "Error al comunicarse con Groq.");
+            _logger.LogWarning(ex, "Error al comunicarse con Groq.");
             throw new GroqServiceException(
                 "No fue posible comunicarse con el servicio de inteligencia artificial.",
                 ex);

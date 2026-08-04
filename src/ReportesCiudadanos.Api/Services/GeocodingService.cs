@@ -11,38 +11,40 @@ public sealed record GeocodingResult(
 
 public interface IGeocodingService
 {
-    Task<GeocodingResult?> BuscarAsync(
-        string direccion,
-        CancellationToken cancellationToken = default);
+    Task<GeocodingResult?> BuscarAsync(string direccion);
 }
 
-public sealed class NominatimGeocodingService(
-    HttpClient httpClient,
-    ILogger<NominatimGeocodingService> logger) : IGeocodingService
+public sealed class NominatimGeocodingService : IGeocodingService
 {
-    public async Task<GeocodingResult?> BuscarAsync(
-        string direccion,
-        CancellationToken cancellationToken = default)
+    private readonly HttpClient _httpClient;
+    private readonly ILogger<NominatimGeocodingService> _logger;
+
+    public NominatimGeocodingService(
+        HttpClient httpClient,
+        ILogger<NominatimGeocodingService> logger)
+    {
+        _httpClient = httpClient;
+        _logger = logger;
+    }
+
+    public async Task<GeocodingResult?> BuscarAsync(string direccion)
     {
         try
         {
             var query = Uri.EscapeDataString(direccion);
-            using var response = await httpClient.GetAsync(
-                $"search?format=jsonv2&limit=1&q={query}",
-                cancellationToken);
+            using var response = await _httpClient.GetAsync(
+                $"search?format=jsonv2&limit=1&q={query}");
 
             if (!response.IsSuccessStatusCode)
             {
-                logger.LogWarning(
+                _logger.LogWarning(
                     "Nominatim respondió con código {StatusCode}.",
                     response.StatusCode);
                 return null;
             }
 
-            await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
-            var resultados = await JsonSerializer.DeserializeAsync<List<NominatimResponse>>(
-                stream,
-                cancellationToken: cancellationToken);
+            await using var stream = await response.Content.ReadAsStreamAsync();
+            var resultados = await JsonSerializer.DeserializeAsync<List<NominatimResponse>>(stream);
             var resultado = resultados?.FirstOrDefault();
 
             if (resultado is null
@@ -58,7 +60,7 @@ public sealed class NominatimGeocodingService(
                                    or TaskCanceledException
                                    or JsonException)
         {
-            logger.LogWarning(ex, "No fue posible geocodificar la dirección.");
+            _logger.LogWarning(ex, "No fue posible geocodificar la dirección.");
             return null;
         }
     }

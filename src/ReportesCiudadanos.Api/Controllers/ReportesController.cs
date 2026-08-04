@@ -5,29 +5,32 @@ using ReportesCiudadanos.Api.Services;
 namespace ReportesCiudadanos.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
-public class ReportesController(IReportesService reportesService) : ControllerBase
+[Route("api/reportes")]
+public class ReportesController : ControllerBase
 {
+    private readonly IReportesService _reportesService;
+
+    public ReportesController(IReportesService reportesService)
+    {
+        _reportesService = reportesService;
+    }
+
     [HttpGet]
-    [ProducesResponseType<IReadOnlyList<ReporteDto>>(StatusCodes.Status200OK)]
-    [ProducesResponseType<ProblemDetails>(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<IReadOnlyList<ReporteDto>>> Listar(
         [FromQuery] string? categoria,
         [FromQuery] string? estado,
         [FromQuery] string? prioridad,
         [FromQuery] DateTime? fechaInicio,
-        [FromQuery] DateTime? fechaFin,
-        CancellationToken cancellationToken)
+        [FromQuery] DateTime? fechaFin)
     {
         try
         {
-            var reportes = await reportesService.ListarAsync(
+            var reportes = await _reportesService.ListarAsync(
                 categoria,
                 estado,
                 prioridad,
                 fechaInicio,
-                fechaFin,
-                cancellationToken);
+                fechaFin);
             return Ok(reportes);
         }
         catch (ArgumentException ex)
@@ -40,39 +43,25 @@ public class ReportesController(IReportesService reportesService) : ControllerBa
     }
 
     [HttpGet("{id:int}")]
-    [ProducesResponseType<ReporteDto>(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ReporteDto>> Obtener(
-        int id,
-        CancellationToken cancellationToken)
+    public async Task<ActionResult<ReporteDto>> Obtener(int id)
     {
-        var reporte = await reportesService.ObtenerAsync(id, cancellationToken);
+        var reporte = await _reportesService.ObtenerAsync(id);
         return reporte is null ? NotFound() : Ok(reporte);
     }
 
     [HttpPost]
-    [ProducesResponseType<ReporteDto>(StatusCodes.Status201Created)]
-    [ProducesResponseType<ValidationProblemDetails>(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<ReporteDto>> Crear(
-        CrearReporteDto dto,
-        CancellationToken cancellationToken)
+    public async Task<ActionResult<ReporteDto>> Crear(CrearReporteDto dto)
     {
-        var reporte = await reportesService.CrearAsync(dto, cancellationToken);
+        var reporte = await _reportesService.CrearAsync(dto);
         return CreatedAtAction(nameof(Obtener), new { id = reporte.Id }, reporte);
     }
 
     [HttpPut("{id:int}")]
-    [ProducesResponseType<ReporteDto>(StatusCodes.Status200OK)]
-    [ProducesResponseType<ProblemDetails>(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ReporteDto>> Actualizar(
-        int id,
-        ActualizarReporteDto dto,
-        CancellationToken cancellationToken)
+    public async Task<ActionResult<ReporteDto>> Actualizar(int id, ActualizarReporteDto dto)
     {
         try
         {
-            var reporte = await reportesService.ActualizarAsync(id, dto, cancellationToken);
+            var reporte = await _reportesService.ActualizarAsync(id, dto);
             return reporte is null ? NotFound() : Ok(reporte);
         }
         catch (ArgumentException ex)
@@ -85,27 +74,18 @@ public class ReportesController(IReportesService reportesService) : ControllerBa
     }
 
     [HttpDelete("{id:int}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Eliminar(
-        int id,
-        CancellationToken cancellationToken)
+    public async Task<IActionResult> Eliminar(int id)
     {
-        var eliminado = await reportesService.EliminarAsync(id, cancellationToken);
+        var eliminado = await _reportesService.EliminarAsync(id);
         return eliminado ? NoContent() : NotFound();
     }
 
     [HttpPost("{id:int}/analizar")]
-    [ProducesResponseType<ResultadoAnalisisDto>(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType<ProblemDetails>(StatusCodes.Status502BadGateway)]
-    public async Task<ActionResult<ResultadoAnalisisDto>> Analizar(
-        int id,
-        CancellationToken cancellationToken)
+    public async Task<ActionResult<ResultadoAnalisisDto>> Analizar(int id)
     {
         try
         {
-            var resultado = await reportesService.AnalizarAsync(id, cancellationToken);
+            var resultado = await _reportesService.AnalizarAsync(id);
             return resultado is null ? NotFound() : Ok(resultado);
         }
         catch (GroqServiceException ex)

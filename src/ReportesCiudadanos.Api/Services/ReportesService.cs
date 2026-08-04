@@ -12,21 +12,21 @@ public interface IReportesService
         string? estado,
         string? prioridad,
         DateTime? fechaInicio,
-        DateTime? fechaFin,
-        CancellationToken cancellationToken = default);
+        DateTime? fechaFin);
 
-    Task<ReporteDto?> ObtenerAsync(int id, CancellationToken cancellationToken = default);
-    Task<ReporteDto> CrearAsync(CrearReporteDto dto, CancellationToken cancellationToken = default);
-    Task<ReporteDto?> ActualizarAsync(int id, ActualizarReporteDto dto, CancellationToken cancellationToken = default);
-    Task<bool> EliminarAsync(int id, CancellationToken cancellationToken = default);
-    Task<ResultadoAnalisisDto?> AnalizarAsync(int id, CancellationToken cancellationToken = default);
+    Task<ReporteDto?> ObtenerAsync(int id);
+    Task<ReporteDto> CrearAsync(CrearReporteDto dto);
+    Task<ReporteDto?> ActualizarAsync(int id, ActualizarReporteDto dto);
+    Task<bool> EliminarAsync(int id);
+    Task<ResultadoAnalisisDto?> AnalizarAsync(int id);
 }
 
-public sealed class ReportesService(
-    AppDbContext dbContext,
-    IGeocodingService geocodingService,
-    IGroqService groqService) : IReportesService
+public sealed class ReportesService : IReportesService
 {
+    private readonly AppDbContext _dbContext;
+    private readonly IGeocodingService _geocodingService;
+    private readonly IGroqService _groqService;
+
     private static readonly Dictionary<string, string> Estados = new(StringComparer.OrdinalIgnoreCase)
     {
         ["Pendiente"] = "Pendiente",
@@ -35,20 +35,29 @@ public sealed class ReportesService(
         ["Pendiente de análisis"] = "Pendiente de análisis"
     };
 
+    public ReportesService(
+        AppDbContext dbContext,
+        IGeocodingService geocodingService,
+        IGroqService groqService)
+    {
+        _dbContext = dbContext;
+        _geocodingService = geocodingService;
+        _groqService = groqService;
+    }
+
     public async Task<IReadOnlyList<ReporteDto>> ListarAsync(
         string? categoria,
         string? estado,
         string? prioridad,
         DateTime? fechaInicio,
-        DateTime? fechaFin,
-        CancellationToken cancellationToken = default)
+        DateTime? fechaFin)
     {
         if (fechaInicio.HasValue && fechaFin.HasValue && fechaInicio > fechaFin)
         {
             throw new ArgumentException("fechaInicio no puede ser posterior a fechaFin.");
         }
 
-        var query = dbContext.Reportes
+        var query = _dbContext.Reportes
             .AsNoTracking()
             .Include(x => x.AnalisisIA)
             .AsQueryable();
@@ -83,26 +92,22 @@ public sealed class ReportesService(
 
         var reportes = await query
             .OrderByDescending(x => x.FechaRegistro)
-            .ToListAsync(cancellationToken);
+            .ToListAsync();
 
         return reportes.Select(Mapear).ToList();
     }
 
-    public async Task<ReporteDto?> ObtenerAsync(
-        int id,
-        CancellationToken cancellationToken = default)
+    public async Task<ReporteDto?> ObtenerAsync(int id)
     {
-        var reporte = await dbContext.Reportes
+        var reporte = await _dbContext.Reportes
             .AsNoTracking()
             .Include(x => x.AnalisisIA)
-            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            .FirstOrDefaultAsync(x => x.Id == id);
 
         return reporte is null ? null : Mapear(reporte);
     }
 
-    public async Task<ReporteDto> CrearAsync(
-        CrearReporteDto dto,
-        CancellationToken cancellationToken = default)
+    public async Task<ReporteDto> CrearAsync(CrearReporteDto dto)
     {
         var reporte = new Reporte
         {
@@ -113,21 +118,18 @@ public sealed class ReportesService(
             Estado = "Pendiente"
         };
 
-        await AplicarGeocodificacionAsync(reporte, cancellationToken);
-        dbContext.Reportes.Add(reporte);
-        await dbContext.SaveChangesAsync(cancellationToken);
+        await AplicarGeocodificacionAsync(reporte);
+        _dbContext.Reportes.Add(reporte);
+        await _dbContext.SaveChangesAsync();
 
         return Mapear(reporte);
     }
 
-    public async Task<ReporteDto?> ActualizarAsync(
-        int id,
-        ActualizarReporteDto dto,
-        CancellationToken cancellationToken = default)
+    public async Task<ReporteDto?> ActualizarAsync(int id, ActualizarReporteDto dto)
     {
-        var reporte = await dbContext.Reportes
+        var reporte = await _dbContext.Reportes
             .Include(x => x.AnalisisIA)
-            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            .FirstOrDefaultAsync(x => x.Id == id);
         if (reporte is null)
         {
             return null;
@@ -153,35 +155,31 @@ public sealed class ReportesService(
             reporte.Latitud = null;
             reporte.Longitud = null;
             reporte.UbicacionNormalizada = null;
-            await AplicarGeocodificacionAsync(reporte, cancellationToken);
+            await AplicarGeocodificacionAsync(reporte);
         }
 
-        await dbContext.SaveChangesAsync(cancellationToken);
+        await _dbContext.SaveChangesAsync();
         return Mapear(reporte);
     }
 
-    public async Task<bool> EliminarAsync(
-        int id,
-        CancellationToken cancellationToken = default)
+    public async Task<bool> EliminarAsync(int id)
     {
-        var reporte = await dbContext.Reportes.FindAsync([id], cancellationToken);
+        var reporte = await _dbContext.Reportes.FindAsync(id);
         if (reporte is null)
         {
             return false;
         }
 
-        dbContext.Reportes.Remove(reporte);
-        await dbContext.SaveChangesAsync(cancellationToken);
+        _dbContext.Reportes.Remove(reporte);
+        await _dbContext.SaveChangesAsync();
         return true;
     }
 
-    public async Task<ResultadoAnalisisDto?> AnalizarAsync(
-        int id,
-        CancellationToken cancellationToken = default)
+    public async Task<ResultadoAnalisisDto?> AnalizarAsync(int id)
     {
-        var reporte = await dbContext.Reportes
+        var reporte = await _dbContext.Reportes
             .Include(x => x.AnalisisIA)
-            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+            .FirstOrDefaultAsync(x => x.Id == id);
         if (reporte is null)
         {
             return null;
@@ -189,11 +187,10 @@ public sealed class ReportesService(
 
         try
         {
-            var resultado = await groqService.AnalizarAsync(
+            var resultado = await _groqService.AnalizarAsync(
                 reporte.Titulo,
                 reporte.Descripcion,
-                reporte.Direccion,
-                cancellationToken);
+                reporte.Direccion);
 
             reporte.Categoria = resultado.Categoria;
             reporte.Prioridad = resultado.Prioridad;
@@ -219,7 +216,7 @@ public sealed class ReportesService(
                 reporte.AnalisisIA.FechaAnalisis = DateTime.UtcNow;
             }
 
-            await dbContext.SaveChangesAsync(cancellationToken);
+            await _dbContext.SaveChangesAsync();
             return new ResultadoAnalisisDto(
                 resultado.Categoria,
                 resultado.Prioridad,
@@ -230,18 +227,14 @@ public sealed class ReportesService(
         catch (GroqServiceException)
         {
             reporte.Estado = "Pendiente de análisis";
-            await dbContext.SaveChangesAsync(cancellationToken);
+            await _dbContext.SaveChangesAsync();
             throw;
         }
     }
 
-    private async Task AplicarGeocodificacionAsync(
-        Reporte reporte,
-        CancellationToken cancellationToken)
+    private async Task AplicarGeocodificacionAsync(Reporte reporte)
     {
-        var ubicacion = await geocodingService.BuscarAsync(
-            reporte.Direccion,
-            cancellationToken);
+        var ubicacion = await _geocodingService.BuscarAsync(reporte.Direccion);
         if (ubicacion is null)
         {
             return;
