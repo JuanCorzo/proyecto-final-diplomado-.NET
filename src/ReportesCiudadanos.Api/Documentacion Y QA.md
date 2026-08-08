@@ -2216,7 +2216,7 @@ La segunda captura complementa la evidencia anterior y permite visualizar con ma
 
 ### Evidencia
 
-![CP-004 - Consulta de reporte inexistente - Caso inválido](../../evidencias/CP-004.jpg)
+![CP-004 - Consulta de reporte inexistente - Caso inválido](../../docs/evidencias/CP-004.jpg)
 
 ---
 
@@ -2237,7 +2237,7 @@ La segunda captura complementa la evidencia anterior y permite visualizar con ma
 
 La siguiente captura corresponde a la ejecución exitosa del endpoint `PUT /api/reportes/{id}` desde Swagger.
 
-![CP-005 - Actualización de reporte - Caso válido](docs/evidencias/CP-005.jpg)
+![CP-005 - Actualización de reporte - Caso válido](../../docs/evidencias/CP-005.jpg)
 
 ### Verificación de persistencia
 
