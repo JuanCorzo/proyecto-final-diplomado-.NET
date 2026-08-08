@@ -2096,7 +2096,7 @@ El proceso de aseguramiento de la calidad tuvo como objetivo verificar el correc
 
 Las pruebas permitieron comprobar el funcionamiento de las operaciones CRUD, la geocodificación automática de direcciones, la integración con la API de Groq para el análisis inteligente de reportes y la validación de los datos de entrada.
 
-Las pruebas fueron ejecutadas sobre la implementación funcional del proyecto utilizando Swagger como herramienta principal de validación y fueron respaldadas mediante capturas de pantalla. :contentReference[oaicite:3]{index=3}
+Las pruebas fueron ejecutadas sobre la implementación funcional del proyecto utilizando Swagger como herramienta principal de validación y fueron respaldadas mediante capturas de pantalla. 
 
 ---
 
@@ -2241,7 +2241,7 @@ La siguiente captura corresponde a la ejecución exitosa del endpoint `PUT /api/
 
 ### Verificación de persistencia
 
-Posteriormente se ejecutó el endpoint `GET /api/reportes/1`, confirmando que los cambios realizados mediante la operación de actualización fueron almacenados correctamente en la base de datos y recuperados sin inconsistencias. :contentReference[oaicite:1]{index=1}
+Posteriormente se ejecutó el endpoint `GET /api/reportes/1`, confirmando que los cambios realizados mediante la operación de actualización fueron almacenados correctamente en la base de datos y recuperados sin inconsistencias. 
 
 ### Resultado de la evidencia
 
@@ -2298,7 +2298,7 @@ La siguiente captura corresponde a la ejecución del endpoint `DELETE /api/repor
 
 ### Verificación de persistencia
 
-Posteriormente se ejecutó el endpoint `GET /api/reportes/1`, obteniéndose una respuesta HTTP `404 Not Found`. Esto confirmó que el reporte fue eliminado correctamente de la base de datos y ya no podía ser consultado. :contentReference[oaicite:3]{index=3}
+Posteriormente se ejecutó el endpoint `GET /api/reportes/1`, obteniéndose una respuesta HTTP `404 Not Found`. Esto confirmó que el reporte fue eliminado correctamente de la base de datos y ya no podía ser consultado. 
 
 ### Resultado de la evidencia
 
@@ -2540,7 +2540,7 @@ En todos los casos evaluados se obtuvo el comportamiento esperado, evidenciando 
 | **Casos fallidos** | **0** |
 | **Porcentaje de éxito** | **100 %** |
 
-Las pruebas fueron ejecutadas sobre la implementación funcional del proyecto utilizando Swagger como herramienta principal de validación y fueron respaldadas mediante capturas de pantalla. :contentReference[oaicite:1]{index=1}
+Las pruebas fueron ejecutadas sobre la implementación funcional del proyecto utilizando Swagger como herramienta principal de validación y fueron respaldadas mediante capturas de pantalla. 
 
 ---
 
@@ -2567,7 +2567,7 @@ Antes de la entrega del proyecto se verificó el cumplimiento de los principales
 
 ### Estado final
 
-El proyecto cumple satisfactoriamente los criterios de calidad definidos para su entrega, evidenciando el correcto funcionamiento de los componentes desarrollados y la integración entre los diferentes servicios utilizados. :contentReference[oaicite:3]{index=3}
+El proyecto cumple satisfactoriamente los criterios de calidad definidos para su entrega, evidenciando el correcto funcionamiento de los componentes desarrollados y la integración entre los diferentes servicios utilizados. 
 
 ---
 
@@ -2581,7 +2581,7 @@ Asimismo, se comprobó que las validaciones implementadas mediante ASP.NET Core 
 
 En conjunto, las evidencias recopiladas permiten concluir que la solución desarrollada cumple los objetivos funcionales definidos para el proyecto, presenta un comportamiento estable durante las pruebas realizadas y constituye una base sólida para futuras mejoras.
 
-Entre las posibles mejoras futuras se contempla la incorporación de mecanismos de autenticación, notificaciones, paneles estadísticos y aplicaciones cliente para dispositivos móviles y web. :contentReference[oaicite:5]{index=5}
+Entre las posibles mejoras futuras se contempla la incorporación de mecanismos de autenticación, notificaciones, paneles estadísticos y aplicaciones cliente para dispositivos móviles y web. 
 
 ---
 
