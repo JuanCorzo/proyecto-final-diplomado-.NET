@@ -2216,7 +2216,7 @@ La segunda captura complementa la evidencia anterior y permite visualizar con ma
 
 ### Evidencia
 
-![CP-004 - Consulta de reporte inexistente - Caso inválido](docs/evidencias/CP-004.jpg)
+![CP-004 - Consulta de reporte inexistente - Caso inválido](evidencias/CP-004.jpg)
 
 ---
 
