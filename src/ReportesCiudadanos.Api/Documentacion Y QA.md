@@ -2550,20 +2550,20 @@ Antes de la entrega del proyecto se verificó el cumplimiento de los principales
 
 | Verificación | Estado |
 |---|---|
-| API REST implementada | **✔ Cumplido** |
-| CRUD completamente funcional | **✔ Cumplido** |
-| Persistencia en SQLite | **✔ Cumplido** |
-| Entity Framework Core configurado | **✔ Cumplido** |
-| Swagger operativo | **✔ Cumplido** |
-| Geocodificación automática | **✔ Cumplido** |
-| Integración con Groq | **✔ Cumplido** |
-| Generación automática del análisis IA | **✔ Cumplido** |
-| Persistencia del análisis IA | **✔ Cumplido** |
-| Validaciones de entrada implementadas | **✔ Cumplido** |
-| Manejo de errores HTTP | **✔ Cumplido** |
-| Evidencias de funcionamiento recopiladas | **✔ Cumplido** |
-| Casos válidos documentados | **✔ Cumplido** |
-| Casos inválidos documentados | **✔ Cumplido** |
+| API REST implementada | **Cumplido** |
+| CRUD completamente funcional | **Cumplido** |
+| Persistencia en SQLite | **Cumplido** |
+| Entity Framework Core configurado | **Cumplido** |
+| Swagger operativo | **Cumplido** |
+| Geocodificación automática | **Cumplido** |
+| Integración con Groq | **Cumplido** |
+| Generación automática del análisis IA | **Cumplido** |
+| Persistencia del análisis IA | **Cumplido** |
+| Validaciones de entrada implementadas | **Cumplido** |
+| Manejo de errores HTTP | **Cumplido** |
+| Evidencias de funcionamiento recopiladas | **Cumplido** |
+| Casos válidos documentados | **Cumplido** |
+| Casos inválidos documentados | **Cumplido** |
 
 ### Estado final
 
@@ -2581,7 +2581,7 @@ Asimismo, se comprobó que las validaciones implementadas mediante ASP.NET Core 
 
 En conjunto, las evidencias recopiladas permiten concluir que la solución desarrollada cumple los objetivos funcionales definidos para el proyecto, presenta un comportamiento estable durante las pruebas realizadas y constituye una base sólida para futuras mejoras.
 
-Entre las posibles mejoras futuras se contempla la incorporación de mecanismos de autenticación, notificaciones, paneles estadísticos y aplicaciones cliente para dispositivos móviles y web. :contentReference[oaicite:5]{index=5}
+Entre las posibles mejoras futuras se contempla la incorporación de mecanismos de autenticación, notificaciones, paneles estadísticos y aplicaciones cliente para dispositivos móviles y web. 
 
 ---
 
