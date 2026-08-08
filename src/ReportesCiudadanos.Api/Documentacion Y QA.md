@@ -2133,13 +2133,13 @@ Se contemplaron:
 
 La siguiente captura corresponde a la ejecución del endpoint `POST /api/reportes` desde Swagger, donde se realizó la creación del reporte ciudadano.
 
-![CP-001 - Creación del reporte](docs/evidencias/CP-001.jpg)
+![CP-001 - Creación del reporte](../../docs/evidencias/CP-001.jpg)
 
 ### Evidencia 2
 
 La segunda captura complementa la evidencia anterior y permite visualizar con mayor detalle la solicitud y la respuesta obtenida durante la creación del reporte.
 
-![CP-001 - Respuesta de creación del reporte](docs/evidencias/CP-001-2.jpg)
+![CP-001 - Respuesta de creación del reporte](../../docs/evidencias/CP-001-2.jpg)
 
 ### Resultado de la evidencia
 
@@ -2166,13 +2166,13 @@ La segunda captura complementa la evidencia anterior y permite visualizar con ma
 
 La siguiente captura corresponde a la consulta de los reportes registrados mediante el endpoint `GET /api/reportes`.
 
-![CP-002 - Consulta de reportes](docs/evidencias/CP-002.jpg)
+![CP-002 - Consulta de reportes](../../docs/evidencias/CP-002.jpg)
 
 ### Evidencia 2
 
 La segunda captura complementa la evidencia anterior y permite visualizar con mayor detalle la solicitud y la respuesta obtenida en la consulta del reporte registrado.
 
-![CP-002 - Respuesta de consulta de reportes](docs/evidencias/CP-002-2.jpg)
+![CP-002 - Respuesta de consulta de reportes](../../docs/evidencias/CP-002-2.jpg)
 
 ### Resultado de la evidencia
 
@@ -2197,7 +2197,7 @@ La segunda captura complementa la evidencia anterior y permite visualizar con ma
 
 ### Evidencia
 
-![CP-003 - Consulta de reporte por ID - Caso válido](docs/evidencias/CP-003.jpg)
+![CP-003 - Consulta de reporte por ID - Caso válido](../../docs/evidencias/CP-003.jpg)
 
 ---
 
@@ -2268,7 +2268,7 @@ Posteriormente se ejecutó el endpoint `GET /api/reportes/1`, confirmando que lo
 
 La siguiente captura corresponde a la ejecución del endpoint `PUT /api/reportes/{id}` utilizando un identificador inexistente (`20`).
 
-![CP-006 - Actualización de reporte inexistente - Caso inválido](docs/evidencias/CP-006.jpg)
+![CP-006 - Actualización de reporte inexistente - Caso inválido](../../docs/evidencias/CP-006.jpg)
 
 ### Resultado de la evidencia
 
@@ -2294,7 +2294,7 @@ La siguiente captura corresponde a la ejecución del endpoint `PUT /api/reportes
 
 La siguiente captura corresponde a la ejecución del endpoint `DELETE /api/reportes/{id}` desde Swagger.
 
-![CP-007 - Eliminación de reporte - Caso válido](docs/evidencias/CP-007.jpg)
+![CP-007 - Eliminación de reporte - Caso válido](../../docs/evidencias/CP-007.jpg)
 
 ### Verificación de persistencia
 
@@ -2326,7 +2326,7 @@ Posteriormente se ejecutó el endpoint `GET /api/reportes/1`, obteniéndose una 
 
 La siguiente captura corresponde a la ejecución del endpoint `DELETE /api/reportes/{id}` utilizando un identificador inexistente (`20`).
 
-![CP-008 - Eliminación de reporte inexistente - Caso inválido](docs/evidencias/CP-008.jpg)
+![CP-008 - Eliminación de reporte inexistente - Caso inválido](../../docs/evidencias/CP-008.jpg)
 
 ### Resultado de la evidencia
 
@@ -2356,7 +2356,7 @@ La siguiente captura corresponde a la ejecución del endpoint `DELETE /api/repor
 
 La siguiente captura corresponde a la ejecución exitosa del endpoint `POST /api/reportes/{id}/analizar`. La aplicación envió el reporte a Groq y recibió el análisis generado mediante Inteligencia Artificial.
 
-![CP-009 - Análisis inteligente mediante IA](docs/evidencias/CP-009.jpg)
+![CP-009 - Análisis inteligente mediante IA](../../docs/evidencias/CP-009.jpg)
 
 ### Resultado de la evidencia
 
@@ -2384,7 +2384,7 @@ La siguiente captura corresponde a la ejecución exitosa del endpoint `POST /api
 
 La siguiente captura corresponde a la consulta del reporte mediante `GET /api/reportes/{id}` después de ejecutar el análisis mediante IA.
 
-![CP-010 - Persistencia del análisis IA](docs/evidencias/CP-010.jpg)
+![CP-010 - Persistencia del análisis IA](../../docs/evidencias/CP-010.jpg)
 
 ### Verificación
 
@@ -2414,13 +2414,13 @@ La respuesta permite comprobar que la categoría, la prioridad y el objeto `anal
 
 La primera captura corresponde al envío del reporte con el campo `Título` vacío.
 
-![CP-011 - Validación del campo Título - Parte 1](docs/evidencias/CP-011.jpg)
+![CP-011 - Validación del campo Título - Parte 1](../../docs/evidencias/CP-011.jpg)
 
 ### Evidencia 2
 
 La segunda captura permite visualizar la respuesta de la API y los mensajes asociados a la validación del campo obligatorio.
 
-![CP-011 - Validación del campo Título - Parte 2](docs/evidencias/CP-011-2.jpg)
+![CP-011 - Validación del campo Título - Parte 2](../../docs/evidencias/CP-011-2.jpg)
 
 ### Resultado de la evidencia
 
@@ -2447,13 +2447,13 @@ La segunda captura permite visualizar la respuesta de la API y los mensajes asoc
 
 La primera captura corresponde al envío del reporte con el campo `Descripción` vacío.
 
-![CP-012 - Validación del campo Descripción - Parte 1](docs/evidencias/CP-012.jpg)
+![CP-012 - Validación del campo Descripción - Parte 1](../../docs/evidencias/CP-012.jpg)
 
 ### Evidencia 2
 
 La segunda captura permite visualizar la respuesta de la API y los mensajes generados por la validación.
 
-![CP-012 - Validación del campo Descripción - Parte 2](docs/evidencias/CP-012-2.jpg)
+![CP-012 - Validación del campo Descripción - Parte 2](../../docs/evidencias/CP-012-2.jpg)
 
 ### Resultado de la evidencia
 
@@ -2480,13 +2480,13 @@ La segunda captura permite visualizar la respuesta de la API y los mensajes gene
 
 La primera captura corresponde al envío del reporte con el campo `Dirección` vacío.
 
-![CP-013 - Validación del campo Dirección - Parte 1](docs/evidencias/CP-013.jpg)
+![CP-013 - Validación del campo Dirección - Parte 1](../../docs/evidencias/CP-013.jpg)
 
 ### Evidencia 2
 
 La segunda captura permite visualizar la respuesta de la API y los mensajes generados por la validación del campo obligatorio.
 
-![CP-013 - Validación del campo Dirección - Parte 2](docs/evidencias/CP-013-2.jpg)
+![CP-013 - Validación del campo Dirección - Parte 2](../../docs/evidencias/CP-013-2.jpg)
 
 ### Resultado de la evidencia
 
