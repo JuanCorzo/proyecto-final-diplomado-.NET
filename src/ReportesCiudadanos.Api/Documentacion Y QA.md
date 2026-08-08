@@ -2581,7 +2581,7 @@ Asimismo, se comprobó que las validaciones implementadas mediante ASP.NET Core 
 
 En conjunto, las evidencias recopiladas permiten concluir que la solución desarrollada cumple los objetivos funcionales definidos para el proyecto, presenta un comportamiento estable durante las pruebas realizadas y constituye una base sólida para futuras mejoras.
 
-Entre las posibles mejoras futuras se contempla la incorporación de mecanismos de autenticación, notificaciones, paneles estadísticos y aplicaciones cliente para dispositivos móviles y web. 
+Entre las posibles mejoras futuras se contempla la incorporación de mecanismos de autenticación, notificaciones, paneles estadísticos y aplicaciones cliente para dispositivos móviles y web. :contentReference[oaicite:5]{index=5}
 
 ---
 
